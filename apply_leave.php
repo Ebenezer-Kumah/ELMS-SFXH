@@ -55,7 +55,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error = "Please provide a reason for your leave";
         } else {
             // Submit leave request
-            $stmt = $pdo->prepare("INSERT INTO leave_requests (employee_id, leave_type_id, start_date, end_date, reason) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $pdo->prepare("INSERT INTO leave_requests (employee_id, leave_type_id, start_date, end_date, reason, status) 
+        VALUES (:employee_id, :leave_type_id, :start_date, :end_date, :reason, 'pending')");
             if ($stmt->execute([$_SESSION['user_id'], $leave_type_id, $start_date, $end_date, $reason])) {
                 $success = 'Leave request submitted successfully';
             } else {
