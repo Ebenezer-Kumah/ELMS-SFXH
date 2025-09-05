@@ -6,17 +6,16 @@ if (!defined('BASE_PATH')) {
     define('BASE_PATH', dirname(dirname(__FILE__)));
 }
 
-// Database configuration
-$db_host = 'localhost';
-$db_name = 'elms';
-$db_user = 'root';
-$db_pass = '';
+// Database configuration for Supabase
+$host = "cdrdtizfmehslttsbjtc";
+$db_name = "Elms_db";  // Supabase default
+$username = "postgres";
+$password = "0274742039&Joe"; // from Supabase settings
 
-// Establish database connection
 try {
-    $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8", $db_user, $db_pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch(PDOException $e) {
-    die("Could not connect to the database: " . $e->getMessage());
+    $conn = new PDO("pgsql:host=$host;port=5432;dbname=$db_name;user=$username;password=$password");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $exception){
+    echo "Connection error: " . $exception->getMessage();
 }
 ?>
