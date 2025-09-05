@@ -1,7 +1,17 @@
 // script.js - Employee Leave Management System JavaScript
 
+
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = 'https://cdrdtizfmehslttsbjtc.supabase.co'
+const supabaseKey = process.env.SUPABASE_KEY
+const supabase = createClient(supabaseUrl, supabaseKey)
+
 document.addEventListener('DOMContentLoaded', function() {
     // Sidebar functionality
+
+
+    
     const sidebar = document.getElementById('sidebar');
     const mainContainer = document.getElementById('mainContainer');
     const sidebarToggle = document.getElementById('sidebarToggle');
