@@ -1,10 +1,6 @@
 <?php
 // config/config.php
 
-// Define base path only if not already defined
-if (!defined('BASE_PATH')) {
-    define('BASE_PATH', dirname(dirname(__FILE__)));
-}
 
 // Database configuration for Supabase
 $host = "cdrdtizfmehslttsbjtc";
