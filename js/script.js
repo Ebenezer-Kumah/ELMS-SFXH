@@ -3,8 +3,8 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://cdrdtizfmehslttsbjtc.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
+const supabaseUrl = "https://cdrdtizfmehslttsbjtc.supabase.co"
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNkcmR0aXpmbWVoc2x0dHNianRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcwODc3MTMsImV4cCI6MjA3MjY2MzcxM30.qR3XeFxrLaQaRVK3WoJYnPh1fxmXT6383l62cSQpQMw"  // or service_role for backend
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 document.addEventListener('DOMContentLoaded', function() {
