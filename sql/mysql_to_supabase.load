@@ -1,0 +1,45 @@
+
+-- Save this as mysql_to_supabase.load
+-- Usage:
+--   pgloader mysql_to_supabase.load
+
+LOAD DATABASE
+     FROM mysql://MYSQL_USER:MYSQL_PASS@MYSQL_HOST:3306/elms
+     INTO postgresql://POSTGRES_USER:POSTGRES_PASS@SUPABASE_HOST:5432/postgres
+
+  WITH include drop, create no tables, create no indexes,
+       reset sequences, data only,
+       prefetch rows = 1000,
+       batch rows = 1000,
+       workers = 4,
+       concurrency = 1,
+       on error stop
+
+  CAST
+    type datetime to timestamp using zero-dates-to-null,
+    type date to date drop default,
+    type tinyint to boolean using tinyint-to-boolean,
+    type enum to text drop default,
+    type decimal to numeric keep default,
+    type bigint unsigned to bigint;
+
+-- Example table mappings if names differ (uncomment and adjust as needed):
+--  INCLUDING ONLY TABLE NAMES MATCHING 'users', 'leave_types', 'leave_requests', 'leave_balances', 'notifications'
+--  ALTER TABLE NAMES MATCHING ~/`(.+)`/ SET SCHEMA 'public'
+--
+--  BEFORE LOAD DO
+--    $$ SET session_replication_role = 'replica' $$,
+--    $$ TRUNCATE TABLE public.users, public.leave_types, public.leave_requests, public.leave_balances, public.notifications RESTART IDENTITY CASCADE $$
+--  AFTER LOAD DO
+--    $$ SET session_replication_role = 'origin' $$;
+
+-- Helpers used above
+-- Convert MySQL 0 dates to NULL
+FUNCTION zero-dates-to-null (s)
+RETURNS timestamp
+AS $$ case s when '0000-00-00 00:00:00' then NULL else s end $$;
+
+-- Convert tinyint(1) to boolean
+FUNCTION tinyint-to-boolean (v)
+RETURNS boolean
+AS $$ case v when 0 then false else true end $$;
